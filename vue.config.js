@@ -11,5 +11,5 @@ module.exports = {
       .set('network', resolve('src/network'))
       .set('components', resolve('src/components'))
       .set('assets', resolve('src/assets'))
-  }
+  },
 };

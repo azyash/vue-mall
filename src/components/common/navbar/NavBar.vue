@@ -19,11 +19,6 @@ export default {
 </script>
 
 <style scoped>
-.nav-bar {
-  display: flex;
-  height: 44px;
-  line-height: 44px;
-}
 .left,
 .right {
   width: 60px;
