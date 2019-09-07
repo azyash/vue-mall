@@ -17,7 +17,7 @@ export default {
     pullUpLoad: {
       type: Boolean,
       default: false
-    }
+    },
   },
   data () {
     return {
@@ -35,9 +35,11 @@ export default {
       this.$emit('scroll', position)
     })
 
-    this.scroll.on('pullingUp', () => {
-      this.$emit('pullingUp')
-    })
+    if (this.pullUpLoad) {
+      this.scroll.on('pullingUp', () => {
+        this.$emit('pullingUp')
+      })
+    }
   }
 }
 </script>

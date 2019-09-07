@@ -3,12 +3,12 @@
     <nav-bar class="home-navbar">
       <div slot="center">购物街</div>
     </nav-bar>
-
+    <tab-control :titles="['流行','新款','精选']" @tabclick='tabclick' ref="TabControl1" v-show="isTabFixed" />
     <scroll class="scroll" ref="scroll" :probe-type="3" @scroll="contentScroll" :pull-up-load="true" @pullingUp="pullingUp">
-      <home-swiper :banners='banners' />
+      <home-swiper :banners='banners' @swiperImageLoad="swiperImageLoad" />
       <recommend-view :recommends='recommends' />
       <feature-view />
-      <tab-control :titles="['流行','新款','精选']" @tabclick='tabclick' />
+      <tab-control :titles="['流行','新款','精选']" @tabclick='tabclick' ref="TabControl2" />
       <goods-list :goods="showGoods" />
     </scroll>
 
@@ -28,6 +28,7 @@ import RecommendView from './childComps/RecommendView'
 import FeatureView from './childComps/FeatureView'
 
 import { getHomeMultidata, getHomeGoods } from 'network/home'
+import { debounce } from 'common/utils'
 
 
 export default {
@@ -44,6 +45,8 @@ export default {
       },
       currentTtpe: 'pop',
       isShowBackTop: false,
+      tabOffsetTop: 0,
+      isTabFixed: false
     }
   },
   components: {
@@ -62,11 +65,20 @@ export default {
     this.getHomeGoods('pop')
     this.getHomeGoods('new')
     this.getHomeGoods('sell')
+
+    //监听图片加载完成
+
+    this.$bus.$on('itemImageLoad', () => {
+      debounce(this.$refs.scroll.scroll.refresh(), 250)
+    })
   },
   methods: {
+
+
     /**
      * 事件监听相关
      */
+
     tabclick (index) {
       switch (index) {
         case 0:
@@ -79,15 +91,22 @@ export default {
           this.currentTtpe = 'sell'
           break
       }
+      this.$refs.TabControl1.currentIndex = index
+      this.$refs.TabControl2.currentIndex = index
     },
     backClick () {
       this.$refs.scroll.scroll.scrollTo(0, 0, 500)
     },
     contentScroll (prosition) {
       this.isShowBackTop = (-prosition.y) > 900
+
+      this.isTabFixed = (-prosition.y) > this.tabOffsetTop
     },
     pullingUp () {
       this.getHomeGoods(this.currentTtpe)
+    },
+    swiperImageLoad () {
+      this.tabOffsetTop = this.$refs.TabControl2.$el.offsetTop
     },
     /**
      * 网络请求相关
@@ -103,7 +122,6 @@ export default {
       getHomeGoods(type, 1).then(res => {
         this.goods[type].list.push(...res.data.list)
         this.goods[type].page += 1
-
         this.$refs.scroll.scroll.finishPullUp()
       })
     }
@@ -128,9 +146,6 @@ export default {
   display: flex;
   height: 44px;
   line-height: 44px;
-  position: fixed;
-  top: 0;
-  z-index: 1;
 }
 .scroll {
   overflow: hidden;

@@ -30,7 +30,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .tab-control {
   z-index: 999;
   display: flex;
