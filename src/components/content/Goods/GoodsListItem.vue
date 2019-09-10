@@ -22,7 +22,7 @@ export default {
   },
   computed: {
     showImage () {
-      return this.goodsItem.image || this.goodsItem.show.img
+      return this.goodsItem.image || this.goodsItem.img || this.goodsItem.show.img
     }
   },
   methods: {
@@ -33,7 +33,6 @@ export default {
       this.$router.push('/detail/' + this.goodsItem.iid)
     }
   },
-
 }
 </script>
 

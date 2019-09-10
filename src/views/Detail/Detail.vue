@@ -128,7 +128,9 @@ export default {
       product.price = this.goods.realPrice
       product.iid = this.iid
 
-      this.$store.commit('addCart', product)
+      this.$store.commit('addCart', product).them(res => {
+        console.log(res)
+      })
     }
   },
 }
