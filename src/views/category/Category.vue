@@ -1,6 +1,6 @@
 <template>
   <div>
-    home
+    category
   </div>
 </template>
 
