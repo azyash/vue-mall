@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import { getHomeMultidata } from 'network/home'
+
 export default {
   name: "",
   components: {},
@@ -16,7 +18,11 @@ export default {
   watch: {},
   computed: {},
   methods: {},
-  created () { },
+  created () {
+    getHomeMultidata().then(res => {
+      console.log(res)
+    })
+  },
   mounted () { }
 }
 </script>

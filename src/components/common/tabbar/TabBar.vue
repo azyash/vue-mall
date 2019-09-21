@@ -18,6 +18,6 @@ export default {
   left: 0;
   right: 0;
   background: #eee;
-  padding: 10px 0;
+  padding: 6px 0;
 }
 </style>
