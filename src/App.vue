@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
     <MainTabBar></MainTabBar>
   </div>
 </template>
@@ -21,5 +23,6 @@ export default {
 
 #app {
   position: relative;
+  overflow: hidden;
 }
 </style>
