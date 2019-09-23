@@ -47,6 +47,6 @@ export default {
 }
 .recommendItem h2 {
   text-align: center;
-  font-size: 5vw;
+  font-size: 4vw;
 }
 </style>

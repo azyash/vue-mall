@@ -16,13 +16,14 @@ export default {
     MainTabBar
   }
 }
-</script>
+</script>             
 
 <style>
 @import "assets/css/base.css";
 
+html,
+body,
 #app {
-  position: relative;
-  overflow: hidden;
+  height: 100%;
 }
 </style>

@@ -1,11 +1,16 @@
 <template>
-  <div>
+  <div id="home">
     <navBar>
       <div slot="center" class="navBar">购物车</div>
     </navBar>
-    <homeSwiper :banner="banner"></homeSwiper>
-    <recommendView></recommendView>
-    <recommend :recommendData="recommendData"></recommend>
+
+    <scroll class="content">
+      <div>
+        <homeSwiper :banner="banner"></homeSwiper>
+        <recommendView></recommendView>
+        <recommend :recommendData="recommendData"></recommend>
+      </div>
+    </scroll>
   </div>
 </template>
 
@@ -14,7 +19,8 @@ import homeSwiper from './chileCpn/homeSwiper'
 import recommend from './chileCpn/recommend'
 import recommendView from './chileCpn/recommendView'
 import navBar from 'components/common/navBar/navBar'
-import { getHomeMultidata } from 'network/home'
+import scroll from 'components/common/scroll/scroll'
+import { getHomeMultidata, getHomeData } from 'network/home'
 
 export default {
   name: "",
@@ -22,49 +28,70 @@ export default {
     homeSwiper,
     navBar,
     recommend,
+    scroll,
     recommendView
   },
   props: {},
   data () {
     return {
       banner: [],
-      recommendData: []
+      recommendData: [],
+      goodsList: {
+        'pop': { page: 1, list: [] },
+        'new': { page: 1, list: [] },
+        'sell': { page: 1, list: [] }
+      },
     }
   },
   watch: {},
   computed: {},
   methods: {
     /**
-  * 网络请求统一封装
+  * 网络请求方法
   */
     getMultidata () {
       getHomeMultidata().then(res => {
-        console.log(res)
         this.banner = res.data.data.banner.list
         this.recommendData = res.data.data.recommend.list
-        console.log(this.recommend)
+      })
+    },
+    getHomeProducts (type) {
+      getHomeData(type, this.goodsList[type].page).then(res => {
+        const goodsList = res.data.data.list;
+        this.goodsList[type].list.push(...goodsList)
+        this.goodsList[type].page += 1
       })
     }
   },
   created () {
     this.getMultidata()
+    this.getHomeProducts('pop')
+    this.getHomeProducts('new')
+    this.getHomeProducts('sell')
   },
   mounted () {
 
   },
-
-
-
-
 }
 </script>
 
 <style scoped>
+#home {
+  height: 100%;
+}
 .navBar {
   background-color: var(--color-tint);
   font-weight: 700;
   color: #fff;
   display: flex;
   justify-content: center;
+}
+.content {
+  overflow: hidden;
+  position: absolute;
+  top: 5vh;
+  bottom: 50px;
+  left: 0;
+  right: 0;
 }
 </style>
