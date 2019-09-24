@@ -9,6 +9,7 @@
         <homeSwiper :banner="banner"></homeSwiper>
         <recommendView></recommendView>
         <recommend :recommendData="recommendData"></recommend>
+        <goods :goods="showGoodsList"></goods>
       </div>
     </scroll>
   </div>
@@ -20,6 +21,7 @@ import recommend from './chileCpn/recommend'
 import recommendView from './chileCpn/recommendView'
 import navBar from 'components/common/navBar/navBar'
 import scroll from 'components/common/scroll/scroll'
+import goods from 'components/common/goods/goods'
 import { getHomeMultidata, getHomeData } from 'network/home'
 
 export default {
@@ -29,7 +31,8 @@ export default {
     navBar,
     recommend,
     scroll,
-    recommendView
+    recommendView,
+    goods
   },
   props: {},
   data () {
@@ -44,7 +47,11 @@ export default {
     }
   },
   watch: {},
-  computed: {},
+  computed: {
+    showGoodsList () {
+      return this.goodsList['pop'].list
+    }
+  },
   methods: {
     /**
   * 网络请求方法

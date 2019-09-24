@@ -1,5 +1,5 @@
 <template>
-  <div v-if="banner.length">
+  <div v-if="active" ref="swiper">
     <div class="swiper-container">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(item,index) in banner" :key="index">
@@ -14,6 +14,11 @@
 <script>
 import Swiper from 'swiper'
 export default {
+  data () {
+    return {
+      active: false
+    }
+  },
   props: {
     banner: {
       type: Array,
@@ -22,13 +27,14 @@ export default {
   },
   methods: {
     initSwiper () {
-      setTimeout(() => {
-        this.mySwiper = new Swiper('.swiper-container', {
+      var timeout = setTimeout(() => {
+        var mySwiper = new Swiper('.swiper-container', {
           direction: 'horizontal',
           autoplay: {
             delay: 500,
             disableOnInteraction: false
           },
+          observer: true,
           observeParents: true,
           loop: true,
           pagination: {
@@ -38,9 +44,13 @@ export default {
       }, 300)
     }
   },
-  mounted () {
+  deactivated () {
+    this.active = false
+  },
+  activated () {
     this.$nextTick(() => {
       this.initSwiper()
+      this.active = true
     })
   },
 }
