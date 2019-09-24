@@ -32,6 +32,7 @@ export default {
 
 <style scoped>
 .tabChange {
+  padding: 5px 0;
   display: flex;
   width: 100%;
 }
