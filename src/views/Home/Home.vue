@@ -9,6 +9,7 @@
         <homeSwiper :banner="banner"></homeSwiper>
         <recommendView></recommendView>
         <recommend :recommendData="recommendData"></recommend>
+        <tabChange :title="['精选','新品','折扣']"></tabChange>
         <goods :goods="showGoodsList"></goods>
       </div>
     </scroll>
@@ -22,6 +23,7 @@ import recommendView from './chileCpn/recommendView'
 import navBar from 'components/common/navBar/navBar'
 import scroll from 'components/common/scroll/scroll'
 import goods from 'components/common/goods/goods'
+import tabChange from 'components/common/tabChange/tabChange'
 import { getHomeMultidata, getHomeData } from 'network/home'
 
 export default {
@@ -32,6 +34,7 @@ export default {
     recommend,
     scroll,
     recommendView,
+    tabChange,
     goods
   },
   props: {},
